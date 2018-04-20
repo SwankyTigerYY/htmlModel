@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/reset.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/text.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/grid.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/layout.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/nav.css" media="screen" />
+
+    <script src="__PUBLIC__/js/jquery-1.6.4.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-ui/jquery.ui.core.min.js"></script>
+    <script src="__PUBLIC__/js/jquery-ui/jquery.ui.widget.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/jquery-ui/jquery.ui.accordion.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/jquery-ui/jquery.effects.core.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/jquery-ui/jquery.effects.slide.min.js" type="text/javascript"></script>
+    <!-- END: load jquery -->
+    <!-- BEGIN: load jqplot -->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/jquery.jqplot.min.css" />
+    <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="__PUBLIC__/js/jqPlot/excanvas.min.js"></script><![endif]-->
+    <script language="javascript" type="text/javascript" src="__PUBLIC__/js/jqPlot/jquery.jqplot.min.js"></script>
+    <script language="javascript" type="text/javascript" src="__PUBLIC__/js/jqPlot/plugins/jqplot.barRenderer.min.js"></script>
+    <script language="javascript" type="text/javascript" src="__PUBLIC__/js/jqPlot/plugins/jqplot.pieRenderer.min.js"></script>
+    <script language="javascript" type="text/javascript" src="__PUBLIC__/js/jqPlot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+    <script language="javascript" type="text/javascript" src="__PUBLIC__/js/jqPlot/plugins/jqplot.highlighter.min.js"></script>
+    <script language="javascript" type="text/javascript" src="__PUBLIC__/js/jqPlot/plugins/jqplot.pointLabels.min.js"></script>
+    <script src="__PUBLIC__/js/setup.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+//            setupDashboardChart('chart1');图形
+//            setupLeftMenu();//控制菜单显隐
+            setSidebarHeight();//控制屏幕高度
+            Initialize_1();
+            Initialize_2();
+            Initialize_3();
+            Initialize_4();
+            Initialize_5();
+        });
+    </script>
+</head>
+<body>
+<div class="container_12">
+    <div class="grid_12 header-repeat">
+        <!--顶部信息-->
+        {include file="public/header"}
+    </div>
+    <div class="clear">
+    </div>
+    <!--菜单信息-->
+    {include file="public/menu"}
+    <div class="grid_10">
+        <div class="box round">
+            <div class="block">
+                <iframe src="{:url('Index/index_v1')}" name="" class="J_iframe" style="padding: 0px; width: 100%; height: 1000px;" id="mainFrame" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div id="site_info">
+        <!--足部-->
+        {include file="public/footer"}
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){
+//        $('iframe').attr('src','{:url(\'Index/content\')}');
+        //更改iframe
+        $('.J_menuItem').click(function () {
+            var url = $(this).data('url');
+            $('iframe').attr('src',url);
+        });
+        //一级菜单打开二级菜单
+        $('.level_one').click(function () {
+            var Id = $(this).data('id');
+            //二级菜单全部不可见
+            $('.sidemenu .block').each(function (index, item) {
+                item.style.display = 'none';
+            });
+            //指定二级菜单可见
+            //指定菜单可见
+            var c_mennuid = '#section-menu-' + Id;
+            $(c_mennuid).attr('style', 'display:block');
+        });
+    });
+    //初始化方法--------可以改为遍历
+    function Initialize_1() {
+        $("#section-menu-1")
+            .accordion({
+                "header": "a.menuitem"
+            })
+            .bind("accordionchangestart", function (e, data) {
+                data.newHeader.next().andSelf().addClass("current");
+                data.oldHeader.next().andSelf().removeClass("current");
+            })
+            .find("a.menuitem:first").addClass("current")
+            .next().addClass("current");
+
+        $('#section-menu-1 .submenu').css('height','auto');
+    }
+    function Initialize_2() {
+        $("#section-menu-2")
+            .accordion({
+                "header": "a.menuitem"
+            })
+            .bind("accordionchangestart", function (e, data) {
+                data.newHeader.next().andSelf().addClass("current");
+                data.oldHeader.next().andSelf().removeClass("current");
+            })
+            .find("a.menuitem:first").addClass("current")
+            .next().addClass("current");
+
+        $('#section-menu-2 .submenu').css('height','auto');
+    }
+    function Initialize_3() {
+        $("#section-menu-3")
+            .accordion({
+                "header": "a.menuitem"
+            })
+            .bind("accordionchangestart", function (e, data) {
+                data.newHeader.next().andSelf().addClass("current");
+                data.oldHeader.next().andSelf().removeClass("current");
+            })
+            .find("a.menuitem:first").addClass("current")
+            .next().addClass("current");
+
+        $('#section-menu-3 .submenu').css('height','auto');
+    }
+    function Initialize_4() {
+        $("#section-menu-4")
+            .accordion({
+                "header": "a.menuitem"
+            })
+            .bind("accordionchangestart", function (e, data) {
+                data.newHeader.next().andSelf().addClass("current");
+                data.oldHeader.next().andSelf().removeClass("current");
+            })
+            .find("a.menuitem:first").addClass("current")
+            .next().addClass("current");
+
+        $('#section-menu-4 .submenu').css('height','auto');
+    }
+    function Initialize_5() {
+        $("#section-menu-5")
+            .accordion({
+                "header": "a.menuitem"
+            })
+            .bind("accordionchangestart", function (e, data) {
+                data.newHeader.next().andSelf().addClass("current");
+                data.oldHeader.next().andSelf().removeClass("current");
+            })
+            .find("a.menuitem:first").addClass("current")
+            .next().addClass("current");
+
+        $('#section-menu-5 .submenu').css('height','auto');
+    }
+
+    //iframe自适应高度
+    $("#mainFrame").load(function(){
+        var mainheight = $(this).contents().find("body").height()+30;
+        $(this).height(mainheight);
+    });
+</script>
+</html>
