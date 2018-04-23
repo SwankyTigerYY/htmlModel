@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>管理员列表</title>
+    <meta name="keywords" content="超级校园">
+    <meta name="description" content="超级校园">
+
+    <link rel="shortcut icon" href="__PUBLIC__/favicon.ico">
+    <link href="__PUBLIC__/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/static/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/static/css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="__PUBLIC__/static/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/static/js/plugins/layer/laydate/skins/default/laydate.css" id="LayDateSkin">
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight tooltip-demo">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    当前位置：内容管理>知识共享>知识共享一览
+                </div>
+                <div class="ibox-title">
+                    <form name="form"  method="get" action="" class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input placeholder="主题" size="20" type="text" class=" form-control" name="user_name"
+                                       value="{$user_name| default= ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input placeholder="发布人" size="20" type="text" class=" form-control" name="user_sn"
+                                       value="{$user_sn| default= ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <div class="input-daterange input-group" id="demo-date-range">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control layer-date" name="begin" value="" id="input-begin" placeholder="发布起始时间"/>
+                                    </div>
+                                    <span class="input-group-addon">至</span>
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control layer-date" name="end" value="" id="input-end" placeholder="发布结束时间"/>
+                                        <div class="form-control-line"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <button type="submit" class="btn btn-sm btn-primary btn-blue"> 搜索</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="ibox-content">
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12">-->
+                            <!--<div class="col-sm-2 m-b-lg m-b5">  -->
+                                <!--<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="刷新"-->
+                                        <!--onclick="refreshPage()"><i class="fa fa-refresh"></i></button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr class="info">
+                                <th class="col-sm-2">主题</th>
+                                <th class="col-sm-2">起草时间</th>
+                                <th class="col-sm-2">发布时间</th>
+                                <th class="col-sm-2">发布人</th>
+                                <th class="col-sm-2">状态</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>主题</td>
+                                    <td>起草时间</td>
+                                    <td>发布时间</td>
+                                    <td>发布人</td>
+                                    <td>状态</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <ul class="pagination pull-right"><li class="disabled"><span>«</span></li> <li class="active"><span>1</span></li><li><a href="">2</a></li> <li><a href="">»</a></li></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="__PUBLIC__/static/js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/static/js/bootstrap.min.js?v=3.3.6"></script>
+<!-- 自定义js -->
+<script src="__PUBLIC__/static/js/content.js?v=1.0.0"></script>
+<!-- iCheck -->
+<script src="__PUBLIC__/static/js/plugins/layer/layer.min.js"></script>
+
+<script src="__PUBLIC__/static/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="__PUBLIC__/static/js/plugins/toastr/toastr.min.js"></script>
+<script src="__PUBLIC__/static/js/plugins/layer/laydate/laydate.js"></script>
+
+<script>
+
+    //加长提示条
+    $(document).ready(function () {
+        toastr.options = {
+            closeButton: true,
+            debug: false,
+            progressBar: true,
+            positionClass: "toast-top-full-width",
+            onclick: null,
+            showDuration: 400,
+            hideDuration: 1000,
+            timeOut: 3000,
+            extendedTimeOut: 1000,
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut"
+        };
+    });
+
+    $(document).ready(function () {
+        layer.load();
+        var start={
+            elem:"#input-begin",
+            format:"YYYY/MM/DD",
+            max:"2099-06-16 23:59:59",
+            istime:false,
+            istoday:false,
+            choose:function(datas){
+                end.min=datas;end.start=datas
+            }};
+        var end={
+            elem:"#input-end",
+            format:"YYYY/MM/DD",
+            max:"2099-06-16 23:59:59",
+            istime:false,
+            istoday:false,
+            choose:function(datas){
+                start.max=datas
+            }};
+        laydate(start);
+        laydate(end);
+        layer.closeAll();
+    });
+    function refreshPage() {
+        location.reload();
+    }
+</script>
+
+<!--统计代码，不可删除-->
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62695289" charset="UTF-8"></script>
+<script src="https://og6593g2z.qnssl.com/fundebug.0.3.3.min.js"
+        apikey="82f169614eb0294d4de894b580f5d7210989c797883aee361e42b714f0cb983b"></script>
+</body>
+</html>
+
+
