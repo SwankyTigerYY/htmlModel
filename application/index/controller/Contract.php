@@ -10,5 +10,7 @@ namespace app\index\controller;
 use think\Controller;
 
 class Contract extends Controller{
-
+    public function index(){
+        
+    }
 }

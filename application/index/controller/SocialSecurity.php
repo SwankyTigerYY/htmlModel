@@ -11,5 +11,7 @@ namespace app\index\controller;
 use think\Controller;
 
 class SocialSecurity extends Controller{
+    public function index(){
 
+    }
 }

@@ -11,5 +11,7 @@ namespace app\index\controller;
 use think\Controller;
 
 class Insurance extends Controller{
+    public function index(){
 
+    }
 }

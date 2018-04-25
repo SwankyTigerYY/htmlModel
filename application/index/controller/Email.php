@@ -11,5 +11,7 @@ namespace app\index\controller;
 use think\Controller;
 
 class Email extends Controller{
+    public function index(){
 
+    }
 }

@@ -11,5 +11,7 @@ namespace app\index\controller;
 use think\Controller;
 
 class ParticularChanges extends Controller{
+    public function index(){
 
+    }
 }

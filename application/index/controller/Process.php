@@ -11,5 +11,7 @@ namespace app\index\controller;
 use think\Controller;
 
 class Process extends Controller{
+    public function index(){
 
+    }
 }

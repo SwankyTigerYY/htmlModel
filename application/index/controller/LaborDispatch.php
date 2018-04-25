@@ -11,5 +11,7 @@ namespace app\index\controller;
 use think\Controller;
 
 class LaborDispatch extends Controller{
+    public function index(){
 
+    }
 }
