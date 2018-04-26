@@ -10,8 +10,23 @@ namespace app\index\controller;
 
 use think\Controller;
 
-class Insurance extends Controller{
-    public function index(){
 
+/**
+ * 保险
+ */
+class Insurance extends Controller{
+
+    /**
+     * 费用计算
+     */
+    public function count_index(){
+        return $this->fetch();
+    }
+
+    /**
+     * 费用查询
+     */
+    public function select_index(){
+        return $this->fetch();
     }
 }

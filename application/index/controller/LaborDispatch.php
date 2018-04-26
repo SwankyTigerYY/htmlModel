@@ -10,8 +10,19 @@ namespace app\index\controller;
 
 use think\Controller;
 
+/**
+ * 劳务派遣
+ */
 class LaborDispatch extends Controller{
-    public function index(){
+    /**
+     * 在职员工*/
+    public function employees_index(){
+        return $this->fetch();
+    }
 
+    /**
+     * 离职员工*/
+    public function departure_index(){
+        return $this->fetch();
     }
 }

@@ -11,7 +11,22 @@ namespace app\index\controller;
 use think\Controller;
 
 class WorkLog extends Controller{
-    public function index(){
+    //提交
+    public function submit_index(){
+        return $this->fetch();
+    }
+    //评分
+    public function score_index(){
+        return $this->fetch();
+    }
 
+    //查询
+    public function select_index(){
+        return $this->fetch();
+    }
+
+    //分类
+    public function classification_index(){
+        return $this->fetch();
     }
 }

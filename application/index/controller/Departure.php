@@ -10,8 +10,17 @@ namespace app\index\controller;
 
 use think\Controller;
 
+/**
+ * 派遣人员离职管理*/
 class Departure extends Controller{
-    public function index(){
-
+    /**
+     * 离职维护*/
+    public function maintenance_index(){
+        return $this->fetch();
+    }
+    /**
+     * 离职审核*/
+    public function audit_index(){
+        return $this->fetch();
     }
 }

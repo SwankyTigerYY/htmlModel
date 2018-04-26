@@ -9,8 +9,18 @@ namespace app\index\controller;
 
 use think\Controller;
 
+/**
+ * 合同*/
 class Contract extends Controller{
-    public function index(){
-        
+    /**
+     * 合同维护*/
+    public function maintenance_index(){
+        return $this->fetch();
+    }
+
+    /**
+     * 合同审核*/
+    public function audit_index(){
+        return $this->fetch();
     }
 }
