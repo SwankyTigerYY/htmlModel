@@ -387,8 +387,10 @@
             data:{},
             success: function (res) {
                 if (res.code){
-                    $('.mask').hide();
-                    location.href = "{:url('Common/downFile')}"+'?filename='+res.data;
+                    setTimeout(function () {
+                        $('.mask').hide();
+                        location.href = "{:url('Common/downFile')}"+'?filename='+res.data;
+                    },2000);
                 }
             }
         });
