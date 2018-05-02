@@ -26,7 +26,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    当前位置：员工管理>劳务派遣管理>派遣离职员工
+                    当前位置：员工管理>劳务派遣管理>派遣在职员工
                 </div>
                 <div class="ibox-title">
                     <form name="form"  method="get" action="" class="form-inline">
@@ -38,8 +38,12 @@
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-                                <input placeholder="用户工号" size="20" type="text" class=" form-control" name="user_name"
-                                       value="{$user_name| default= ''}">
+                                <select name="admin_type"  id="admin_type" class="form-control m-b">
+                                    <option value="">--人员性质--</option>
+                                    <option value="">派遣</option>
+                                    <option value="">代理</option>
+                                    <option value="">临时工</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -56,43 +60,26 @@
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-                                <input placeholder="身份证号码" size="20" type="text" class=" form-control" name="user_name"
-                                       value="{$user_name| default= ''}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input placeholder="供应商" size="20" type="text" class=" form-control" name="user_name"
-                                       value="{$user_name| default= ''}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <div class="input-daterange input-group" id="demo-date-range">
-                                    <div class="input-group-content">
-                                        <input type="text" class="form-control layer-date" name="begin" value="" id="input-begin" placeholder="到职时间"/>
-                                    </div>
-                                    <span class="input-group-addon">至</span>
-                                    <div class="input-group-content">
-                                        <input type="text" class="form-control layer-date" name="end" value="" id="input-end" placeholder="到职时间"/>
-                                        <div class="form-control-line"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
                                 <input placeholder="所属部门" size="20" type="text" class=" form-control" name="user_name"
                                        value="{$user_name| default= ''}">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-                                <select name="admin_type"  id="admin_type" class="form-control m-b">
-                                    <option value="">--人员性质--</option>
-                                    <option value="">派遣</option>
-                                    <option value="">代理</option>
-                                    <option value="">临时工</option>
+                                <select name="admin_type"  id="admin_ty" class="form-control m-b">
+                                    <option value="">--生日月份--</option>
+                                    <option value="">1月</option>
+                                    <option value="">2月</option>
+                                    <option value="">3月</option>
+                                    <option value="">4月</option>
+                                    <option value="">5月</option>
+                                    <option value="">6月</option>
+                                    <option value="">7月</option>
+                                    <option value="">8月</option>
+                                    <option value="">9月</option>
+                                    <option value="">10月</option>
+                                    <option value="">11月</option>
+                                    <option value="">12月</option>
                                 </select>
                             </div>
                         </div>
@@ -104,36 +91,62 @@
                         </div>
                         <div class="form-group">
                             <div class="input-group">
+                                <input placeholder="身份证号码" size="20" type="text" class=" form-control" name="user_sn"
+                                       value="{$user_sn| default= ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input placeholder="供应商" size="20" type="text" class=" form-control" name="user_sn"
+                                       value="{$user_sn| default= ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <div class="input-daterange input-group" id="demo-date-range">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control layer-date" name="begin" value="" id="input-begin" placeholder="入职时间"/>
+                                    </div>
+                                    <span class="input-group-addon">至</span>
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control layer-date" name="end" value="" id="input-end" placeholder="入职时间"/>
+                                        <div class="form-control-line"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
                                 <button type="submit" class="btn btn-sm btn-primary btn-blue"> 搜索</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="ibox-content">
-                    <!--<div class="row">-->
-                        <!--<div class="col-md-12">-->
-                            <!--<div class="col-sm-2 m-b-lg m-b5">-->
-                                <!--<button class="btn btn-white btn-sm add" data-toggle="tooltip" data-placement="top" title="添加"><i class="fa fa-plus-square"></i></button>-->
-                                <!--<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="刷新"-->
-                                        <!--onclick="refreshPage()"><i class="fa fa-refresh"></i></button>-->
-                                <!--<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="导入"-->
-                                        <!--onclick="uploadFile()"><i class="fa fa-cloud-upload"></i></button>-->
-                                <!--<input type="file" id="bpmnFile" style="display:none">-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="col-sm-2 m-b-lg m-b5">
+                        <button class="btn btn-white btn-sm add" data-toggle="tooltip" data-placement="top" title="添加"><i class="fa fa-plus-square"></i></button>
+                        <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="刷新"
+                                onclick="refreshPage()"><i class="fa fa-refresh"></i></button>
+                        <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="导入"
+                                onclick="uploadFile()"><i class="fa fa-cloud-upload"></i></button>
+                        <input type="file" id="bpmnFile" style="display:none">
+                    </div>
+                    </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-hover">
                             <thead>
                             <tr class="info">
                                 <th class="col-sm-1">员工姓名</th>
                                 <th class="col-sm-1">身份证号码</th>
-                                <th class="col-sm-1">手机</th>
-                                <th class="col-sm-1">在职状态</th>
-                                <th class="col-sm-1">离职日期</th>
-                                <th class="col-sm-1">人员性质</th>
+                                <th class="col-sm-1">到职日期</th>
+                                <th class="col-sm-1">合同结束日期</th>
                                 <th class="col-sm-1">用工单位</th>
                                 <th class="col-sm-1">供应商</th>
+                                <th class="col-sm-1">在职状态</th>
+                                <th class="col-sm-1">业务办理</th>
                                 <th class="col-sm-2">操作</th>
                             </tr>
                             </thead>

@@ -17,7 +17,7 @@ class LaborDispatch extends Controller{
     /**
      * 在职员工*/
     public function employees_index(){
-        return $this->fetch();
+        return $this->fetch('emp_index');
     }
 
     /**
