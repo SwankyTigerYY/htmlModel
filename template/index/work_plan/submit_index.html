@@ -1,10 +1,258 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加管理员</title>
+    <meta name="keywords" content="超级校园">
+    <meta name="description" content="超级校园">
+    <link rel="shortcut icon" href="__PUBLIC__/favicon.ico">
+    <link href="__PUBLIC__/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/static/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/static/css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="__PUBLIC__/static/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/static/js/plugins/layer/laydate/skins/default/laydate.css" id="LayDateSkin">
+    <style type="text/css">
+        .uploadify_box img {
+            width: 100px;
+        }
+
+        .form-group {
+            padding: 0 15px;
+        }
+
+        .input-group {
+            width: 150px;
+            float: left;
+            margin-right: 10px;
+            margin-left: 15px;
+            margin-bottom: 5px;
+        }
+
+        .btn-blue {
+            background-color: #39aef5 !important;
+            border: 1px solid #39aef5 !important;
+        }
+
+        .btn-blue:hover {
+            background-color: #0e9aef !important;
+        }
+
+        .uploadify-button {
+            background-color: #39aef5;
+        }
+
+        .btn-tijiao {
+            padding: 6px;
+            font-size: 14px;
+            background-color: #39aef5;
+            border-color: #39aef5;
+            border: 1px solid #39aef5 !important;
+            width: 100px;
+        }
+
+        .btn-tijiao:hover {
+            background-color: #0e9aef !important;
+        }
+
+        .m-b5 {
+            margin-bottom: 5px
+        }
+        .radio-styled {
+            position: relative;
+            padding-left: 22px;
+        }
+        .radio-styled i{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 18px;
+            height: 18px;
+            background: url(__PUBLIC__/static/css/plugins/iCheck/green2.png) no-repeat;
+            background-position: 0 0;
+        }
+        .radio-styled:hover i{
+            background-position: 0 -19px;
+        }
+        .radio-styled.active i{
+            background-position: 0 -38px;
+        }
+    </style>
+
 </head>
-<body>
-提交
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="form" onsubmit="return false">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label switch-user-name">标题：</label>
+                            <div class="col-sm-6">
+                                <input name="zhuti" class="form-control" type="text" value="{$info.zhuti|default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label switch-user-name">分类：</label>
+                            <div class="input-group">
+                                <select name="admin_type"  id="admin_type" class="form-control m-b">
+                                    <option value="">--季度计划--</option>
+                                    <option value="">每日计划</option>
+                                    <option value="">月份计划</option>
+                                    <option value="">周计划</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">单据日期：</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control layer-date" name="begin_time" value="{$time | default=''}" id="start" placeholder=""/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label switch-user-name">申请人：</label>
+                            <div class="col-sm-6">
+                                <input name="" class="form-control" type="text" value="天津鸿程人力资源开发有限公司">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label switch-user-name">部门名称：</label>
+                            <div class="col-sm-6">
+                                <input name="" class="form-control" type="text" value="人事部">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">开始日期：</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control layer-date" name="begin_time" value="{$time | default=''}" id="begin" placeholder="开始日期"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">结束日期：</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control layer-date" name="end_time" value="{$time | default=''}" id="end" placeholder="结束日期"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">内容：</label>
+                            <div class="col-sm-6">
+                                <textarea name="note" rows="3" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-5 col-sm-offset-3">
+                                <button class="btn btn-w-m btn-success btn-lg btn-tijiao" type="submit" id="save">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--全局js -->
+<script src="__PUBLIC__/static/js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/static/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="__PUBLIC__/static/js/plugins/layer/layer.min.js"></script>
+<script src="__PUBLIC__/static/js/plugins/toastr/toastr.min.js"></script>
+<!-- 自定义js -->
+<script src="__PUBLIC__/static/js/plugins/layer/laydate/laydate.js"></script>
+<!--统计代码，不可删除-->
+<script>
+    $('.radio-styled').on('click', function () {
+        $(this).addClass("active").siblings().removeClass('active');
+        var declare_audit = $("input[name=declare_audit]:checked ").val();
+        switchDeclareAudit(declare_audit);
+    });
+    //加长提示条
+    $(document).ready(function () {
+        toastr.options = {
+            closeButton: true,
+            debug: false,
+            progressBar: true,
+            positionClass: "toast-top-full-width",
+            onclick: null,
+            showDuration: 400,
+            hideDuration: 1000,
+            timeOut: 3000,
+            extendedTimeOut: 1000,
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut"
+        };
+    });
+
+    //初始化时间控件
+    $(document).ready(function () {
+        layer.load();
+        var start = {
+            elem: "#start",
+            format: "YYYY/MM/DD hh:mm:ss",
+            max: "2099-06-16 23:59:59",
+            istime: true,
+            istoday: false,
+            choose: function (datas) {
+                end.min = datas;
+                end.start = datas
+            }
+        };
+        var begin = {
+            elem: "#start",
+            format: "YYYY/MM/DD hh:mm:ss",
+            max: "2099-06-16 23:59:59",
+            istime: true,
+            istoday: false,
+            choose: function (datas) {
+                begin.min = datas;
+                begin.start = datas
+            }
+        };
+        var end = {
+            elem: "#end",
+            format: "YYYY/MM/DD hh:mm:ss",
+            max: "2099-06-16 23:59:59",
+            istime: true,
+            istoday: false,
+            choose: function (datas) {
+                start.max = datas
+            }
+        };
+        laydate(start);
+        laydate(begin);
+        laydate(end);
+        layer.closeAll();
+    });
+
+    /**
+     * 保存
+     */
+    $('#save').on('click', function () {
+        //提交数据
+        layer.load();
+        $.post("{:url('Knowledge/save')}", $('#form').serialize(), function (res) {
+            layer.closeAll();
+            if (res.code) {
+                toastr.success(res.msg);
+                parent.location.reload();
+                return true;
+            } else {
+                toastr.error(res.msg);
+                return false;
+            }
+        }, 'json');
+    });
+
+
+</script>
+
+<!--统计代码，不可删除-->
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62695289" charset="UTF-8"></script>
+<script src="https://og6593g2z.qnssl.com/fundebug.0.3.3.min.js"
+        apikey="82f169614eb0294d4de894b580f5d7210989c797883aee361e42b714f0cb983b"></script>
 </body>
 </html>

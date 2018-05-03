@@ -20,6 +20,7 @@ class Insurance extends Controller{
      * 费用计算
      */
     public function count_index(){
+        $this->assign('time', date('Y-m-d H:i:s', time()));
         return $this->fetch();
     }
 

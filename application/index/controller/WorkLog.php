@@ -13,6 +13,7 @@ use think\Controller;
 class WorkLog extends Controller{
     //提交
     public function submit_index(){
+        $this->assign('time', date('Y-m-d', time()));
         return $this->fetch();
     }
     //评分
