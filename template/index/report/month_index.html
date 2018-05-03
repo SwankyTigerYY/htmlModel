@@ -1,10 +1,355 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>管理员列表</title>
+    <meta name="keywords" content="超级校园">
+    <meta name="description" content="超级校园">
+
+    <link rel="shortcut icon" href="__PUBLIC__/favicon.ico">
+    <link href="__PUBLIC__/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/static/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/static/css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="__PUBLIC__/static/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/static/js/plugins/layer/laydate/skins/default/laydate.css" id="LayDateSkin">
+
+    <style type="text/css">
+        .mask{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 10000;
+        }
+        .mask-info{
+            width:400px;
+            height: 160px;
+            border-radius: 5px;
+            font-size: 30px;
+            background: white;
+            text-align: center;
+            position: absolute;
+            z-index: 10001;
+            top: 50%;
+            margin-top: -80px;
+            left: 50%;
+            margin-left: -200px;
+            text-align: center;
+            line-height: 160px;
+        }
+    </style>
 </head>
-<body>
-month_index
+
+<body class="gray-bg">
+<div class="mask">
+    <div class="mask-info">
+        <i class="fa fa-spinner fa-spin"></i>
+        正在导出，请稍等
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight tooltip-demo">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    当前位置：客户管理>人员报表>派遣人员月报表
+                </div>
+                <div class="ibox-title">
+                    <form name="form"  method="get" action="" class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input placeholder="部门名称" size="20" type="text" class=" form-control" name=""
+                                       value="{$user_name| default= ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <div class="input-daterange input-group" id="demo-date-range">
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control layer-date" name="begin" value="" id="input-begin" placeholder="入职时间"/>
+                                    </div>
+                                    <span class="input-group-addon">至</span>
+                                    <div class="input-group-content">
+                                        <input type="text" class="form-control layer-date" name="end" value="" id="input-end" placeholder="入职时间"/>
+                                        <div class="form-control-line"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <button type="submit" class="btn btn-sm btn-primary btn-blue"> 搜索</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="ibox-content">
+                    <div class="alert alert-success alert-dismissable">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×
+                        </button>
+                        1.招聘入职率= 当月入职人数/(在职总人数+当月离职人数)<br />
+                        2.人员离职率=当月离职人数/(在职总人数+当月离职人数)<br />
+                        3.在职男女比例=当月男工人数/当月女工人数
+                    </div>
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12">-->
+                            <!--<div class="col-sm-2 m-b-lg m-b5">-->
+                                <!--<button class="btn btn-white btn-sm add" data-toggle="tooltip" data-placement="top" title="添加"><i class="fa fa-plus-square"></i></button>-->
+                                <!--<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="刷新"-->
+                                        <!--onclick="refreshPage()"><i class="fa fa-refresh"></i></button>-->
+                                <!--<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="导出"-->
+                                        <!--onclick="downloadFile()"><i class="fa fa-cloud-download"></i></button>-->
+                                <!--<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="导入"-->
+                                        <!--onclick="uploadFile()"><i class="fa fa-cloud-upload"></i></button>-->
+                                <!--<input type="file" id="bpmnFile" style="display:none">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr class="info">
+                                <th class="col-sm-1">部门名称</th>
+                                <th class="col-sm-1">统计月份</th>
+                                <th class="col-sm-1">当月在职人数</th>
+                                <th class="col-sm-1">招聘入职率(%)</th>
+                                <th class="col-sm-1">离职人数</th>
+                                <th class="col-sm-1">人员离职率(%)</th>
+                                <th class="col-sm-1">当月男工人数</th>
+                                <th class="col-sm-1">当月女工人数</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>派遣部</td>
+                                <td>2023-03</td>
+                                <td>1</td>
+                                <td>0.02</td>
+                                <td>0</td>
+                                <td>0.00</td>
+                                <td>0</td>
+                                <td>12</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <ul class="pagination pull-right"><li class="disabled"><span>«</span></li> <li class="active"><span>1</span></li><li><a href="">2</a></li> <li><a href="">»</a></li></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="__PUBLIC__/static/js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/static/js/bootstrap.min.js?v=3.3.6"></script>
+<!-- 自定义js -->
+<script src="__PUBLIC__/static/js/content.js?v=1.0.0"></script>
+<!-- iCheck -->
+<script src="__PUBLIC__/static/js/plugins/layer/layer.min.js"></script>
+
+<script src="__PUBLIC__/static/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="__PUBLIC__/static/js/plugins/toastr/toastr.min.js"></script>
+<script src="__PUBLIC__/static/js/plugins/layer/laydate/laydate.js"></script>
+
+<script>
+    $(document).ready(function () {
+        layer.load();
+        var start={
+            elem:"#input-begin",
+            format:"YYYY/MM/DD",
+            max:"2099-06-16 23:59:59",
+            istime:false,
+            istoday:false,
+            choose:function(datas){
+                end.min=datas;end.start=datas
+            }};
+        var end={
+            elem:"#input-end",
+            format:"YYYY/MM/DD",
+            max:"2099-06-16 23:59:59",
+            istime:false,
+            istoday:false,
+            choose:function(datas){
+                start.max=datas
+            }};
+        laydate(start);
+        laydate(end);
+        layer.closeAll();
+    });
+    function refreshPage() {
+        location.reload();
+    }
+
+    //编辑角色信息
+    $('.add').on('click', function () {
+        var admin_sn = $(this).parents('tr').find('.admin_sn').val();
+        var admin_type = $(this).parents('tr').find('.admin_type').val();
+        //权限检测
+        $.ajax({
+            type: "GET",
+            url: "{:url('Common/checkOpenPage')}",
+            data:{},
+            success: function (res) {
+                if (!res.code) {
+                    layer.msg(res.msg, {time: 1000});
+                    return;
+                }
+                add();
+            }
+        });
+    });
+
+    function add() {
+        layer.open({
+            type: 2,
+            title: '<i></i>新增',
+            shadeClose: true,
+            shade: false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['100%', '100%'],
+            content: "{:url('Announcement/add')}",
+
+        });
+    }
+
+    //编辑角色信息
+    $('.edit').on('click', function () {
+        var admin_sn = $(this).parents('tr').find('.admin_sn').val();
+        var admin_type = $(this).parents('tr').find('.admin_type').val();
+        //权限检测
+        $.ajax({
+            type: "GET",
+            url: "{:url('Common/checkOpenPage')}",
+            data:{},
+            success: function (res) {
+                if (!res.code) {
+                    layer.msg(res.msg, {time: 1000});
+                    return;
+                }
+                edit();
+            }
+        });
+    });
+
+    function edit() {
+        layer.open({
+            type: 2,
+            title: '<i></i>编辑',
+            shadeClose: true,
+            shade: false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['100%', '100%'],
+            content: "{:url('Announcement/edit')}",
+
+        });
+    }
+
+    /**
+     * 删除
+     */
+    $('.delete').click(function () {
+        var obj = $(this);
+        var id = obj.parents('tr').find('.check_single').val();
+        swal({
+                title: "您确定要删除这条信息吗",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "是的，我要删除！",
+                cancelButtonText: "让我再考虑一下…",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $.post("{:url('Announcement/delete')}", {id: id}, function (data) {
+                        if (data.code) {
+                            swal(data.msg, "", "success");
+                            obj.parents('tr').remove();
+                            return true;
+                        } else {
+                            swal(data.msg, "", "error");
+                            return false;
+                        }
+                    }, "json");
+                } else {
+                    swal("已取消", "您取消了删除操作！", "error");
+                }
+            });
+    });
+
+    //编辑角色信息
+    $('.read').on('click', function () {
+        //权限检测
+        $.ajax({
+            type: "GET",
+            url: "{:url('Common/checkOpenPage')}",
+            data:{},
+            success: function (res) {
+                if (!res.code) {
+                    layer.msg(res.msg, {time: 1000});
+                    return;
+                }
+                read();
+            }
+        });
+    });
+
+    function read() {
+        layer.open({
+            type: 2,
+            title: '<i></i>新增',
+            shadeClose: true,
+            shade: false,
+            maxmin: true, //开启最大化最小化按钮
+            area: ['100%', '100%'],
+            content: "{:url('Announcement/read')}",
+
+        });
+    }
+
+    function downloadFile() {
+        $('.mask').show();
+        $.ajax({
+            type: "GET",
+            url: "{:url('Common/download')}",
+            data:{},
+            success: function (res) {
+                if (res.code){
+                    setTimeout(function () {
+                        $('.mask').hide();
+                        location.href = "{:url('Common/downFile')}"+'?filename='+res.data;
+                    },2000);
+                }
+            }
+        });
+    }
+    function uploadFile() {
+        $('#bpmnFile').click();
+    }
+    $('#bpmnFile').on('change',function () {
+        layer.msg('导入成功');
+        setTimeout(function () {
+            refreshPage();
+        }, 2000);
+    })
+</script>
+
+<!--统计代码，不可删除-->
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=62695289" charset="UTF-8"></script>
+<script src="https://og6593g2z.qnssl.com/fundebug.0.3.3.min.js"
+        apikey="82f169614eb0294d4de894b580f5d7210989c797883aee361e42b714f0cb983b"></script>
 </body>
 </html>
+
+
